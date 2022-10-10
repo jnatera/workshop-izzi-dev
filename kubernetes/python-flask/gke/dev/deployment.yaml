@@ -1,0 +1,24 @@
+# This file configures the docfactory--api app which serves public web traffic.
+#kind: Deployment kind: Job kind: Service kind: Pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-flask-gke
+  labels:
+    app: python-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-flask
+  template:
+    metadata:
+      labels:
+        app: python-flask
+    spec:
+      containers:
+        - name: python-flask-app
+          image: gcr.io/innate-bonfire-361004/api-flask-gke:latest
+          # This app listens on port 8080 for web traffic by default.
+          ports:
+            - containerPort: 8080

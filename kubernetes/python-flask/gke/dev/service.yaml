@@ -1,0 +1,20 @@
+# The hello service provides a load-balancing proxy over the hello-app
+# pods. By specifying the type as a 'LoadBalancer', Kubernetes Engine will
+# create an external HTTP load balancer.
+#  type: ClusterIP type: LoadBalancer type: NodePort
+apiVersion: v1
+kind: Service
+metadata:
+  name:  api-docfactory-gke 
+  #annotations:
+  #  cloud.google.com/app-protocols: '{"port-https-doc":"HTTPS","port-doc-80":"HTTP"}'
+spec:
+  #loadBalancerIP: 34.120.38.43
+  type: LoadBalancer
+  selector:
+    app:  api-docfactory-gke
+  ports:
+  - name: port-https-doc
+    #protocol: TCP
+    port: 443
+    targetPort: 8080
