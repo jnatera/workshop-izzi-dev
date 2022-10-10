@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: python-hello-world
-        image: python-hello-world
+        image: gcr.io/innate-bonfire-361004/python-hello-world
         ports:
         - containerPort: 8080
         env:

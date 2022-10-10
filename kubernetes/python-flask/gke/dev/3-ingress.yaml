@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: python-flask
+  labels:
+    app: python-flask
+  annotations:
+    kubernetes.io/ingress.allow-http: "false" # disable HTTP
+    kubernetes.io/ingress.global-static-ip-name: python-flask-static-ip
+    ingress.gcp.kubernetes.io/pre-shared-cert: "jnatera.info"
+    kubernetes.io/ingress.class: "gce"
+spec:
+  tls:
+    - secretName: jnatera.info
+  rules:
+    - host: izzi.jnatera.info
+      http:
+        paths:
+        - backend:
+            serviceName: python-flask
+            servicePort: 443

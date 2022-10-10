@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-flask-gke
+  name: python-flask
   labels:
     app: python-flask
 spec:
@@ -17,8 +17,15 @@ spec:
         app: python-flask
     spec:
       containers:
-        - name: python-flask-app
-          image: gcr.io/innate-bonfire-361004/api-flask-gke:latest
+        - name: python-flask
+          image: gcr.io/innate-bonfire-361004/python-flask-nombre-gke:latest
           # This app listens on port 8080 for web traffic by default.
           ports:
-            - containerPort: 8080
+          - containerPort: 8080
+          env:
+          - name: PORT
+            value: "8080"
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
