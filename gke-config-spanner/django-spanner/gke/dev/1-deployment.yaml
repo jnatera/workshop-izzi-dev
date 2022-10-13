@@ -1,0 +1,33 @@
+# This file configures the docfactory--api app which serves public web traffic.
+#kind: Deployment kind: Job kind: Service kind: Pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-spanner
+  labels:
+    app: django-spanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-spanner
+  template:
+    metadata:
+      labels:
+        app: django-spanner
+    spec:
+      containers:
+        - name: django-spanner
+          image: gcr.io/innate-bonfire-361004/django-spanner-nombre-gke:latest
+          # This app listens on port 8080 for web traffic by default.
+          ports:
+          - containerPort: 8080
+          env:
+          - name: PORT
+            value: "8080"
+          - name: GOOGLE_CLOUD_PROJECT
+            value: innate-bonfire-361004
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
